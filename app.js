@@ -17,6 +17,12 @@ const hidingPlaces = ['tree', 'shed', 'boulder'];
 let correctGuesses = 0;
 let totalGuesses = 0;
 
+function getRandomItem(arr) {
+    const index = Math.floor(Math.random() * arr.length);
+
+    return arr[index];
+}
+
 shedButton.addEventListener('click', () => {
     const hidingSpot = Math.floor(Math.random() * 3);
     const answer = hidingPlaces[hidingSpot];
@@ -35,9 +41,21 @@ boulderButton.addEventListener('click', () => {
     handleGuess(answer, 'boulder');
 });
 
-function handleGuess(correctSpot, userGuess) {
+function handleGuess(hidingSpot, userGuess) {
     resetStyles();
     totalGuesses++;
+
+    const correctHidingPlaceEl = document.getElementById(`${hidingSpot}-container`);
+
+    correctHidingPlaceEl.classList.add('face');
+
+    if (userGuess === hidingSpot) {
+        correctGuesses++;
+    }
+
+    totalEl.textContent = totalGuesses;
+    winsEl.textContent = correctGuesses;
+    lossesEl.textContent = totalGuesses - correctGuesses;
 
     // reset the styles
     // then increment the guesses
